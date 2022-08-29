@@ -1,7 +1,9 @@
 <script lang="ts">
-  import { showHideOverflowY } from "$lib/utils/helpers";
+  import { showHideOverflowY, useMediaQuery } from "$lib/utils/helpers";
 
   import menuState from "./state";
+
+  $: shouldHide = useMediaQuery("(min-width: 1190px)");
 
   const handleToggle = () => {
     $menuState = !$menuState;
@@ -54,7 +56,14 @@
   }
 </style>
 
-<button on:click={handleToggle} aria-label="Show / hide nav items" class="py-3">
+<button
+  on:click={handleToggle}
+  aria-label="Show / hide nav items"
+  class="py-3"
+  hidden={$shouldHide}
+  aria-hidden={$shouldHide}
+  tabindex={$shouldHide ? -1 : 0}
+>
   <div
     class="flex flex-col items-center justify-center h-6 w-12 rounded-xl transition-all duration-200 {$menuState
       ? 'bg-sand-dark dark:bg-light-black'
