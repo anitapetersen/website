@@ -9,8 +9,10 @@ layout: false
 The heart of this reference architecture is a **Kubernetes cluster** where all Gitpod components are deployed to. This cluster consists of three node pools:
 
 1. **Services Node Pool**: The Gitpod “app” with all its services is deployed to these nodes. These services provide the users with the dashboard and manage the provisioning of workspaces.
-2. **Regular Workspaces Node Pool**: Gitpod deploys the actual workspaces (where the actual developer work is happening) to these nodes. Because workspaces have vastly differing resource and security isolation requirements compared to Gitpod’s own services, they run on a dedicated node pool.
-3. **Headless Workspace Node Pool**: Gitpod deploys the imagebuild and prebuild workspaces (where build work generally demands more CPU and disk). Because headless workspaces have vastly differing resource and security isolation requirements compared to Gitpod’s own services and regular workspaces, they run on a dedicated node pool.
+2. **Regular Workspaces Node Pool**: Gitpod deploys the actual workspaces (where the actual developer work is happening) to these nodes.
+3. **Headless Workspace Node Pool**: Gitpod deploys the imagebuild and prebuild workspaces (where build work generally demands more CPU and disk) to these needs.
+
+Gitpod services, imagebuilds, and regular workspaces have vastly differing resource and and isolation requirements. These workloads are separated onto different node pools to provide better quality of service and security guarantees.
 
 You need to assign the following labels to the node pools to enforce that the Gitpod components are scheduled to the proper node pools:
 
