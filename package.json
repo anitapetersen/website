@@ -42,9 +42,9 @@
     "nanoid": "^4.0.0"
   },
   "devDependencies": {
-    "@netlify/functions": "^1.0.0",
-    "@sveltejs/adapter-netlify": "1.0.0-next.49",
-    "@sveltejs/kit": "1.0.0-next.284",
+    "@netlify/functions": "^1.2.0",
+    "@sveltejs/adapter-netlify": "1.0.0-next.55",
+    "@sveltejs/kit": "1.0.0-next.292",
     "@tailwindcss/typography": "^0.5.0",
     "@testing-library/cypress": "^8.0.2",
     "@tsconfig/svelte": "^2.0.1",
