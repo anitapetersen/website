@@ -75,7 +75,7 @@ After that, we [create a **Kubernetes cluster**](https://cloud.google.com/kubern
 ```bash
 CLUSTER_NAME=gitpod
 REGION=us-central1
-GKE_VERSION=1.21.11-gke.900
+GKE_VERSION=1.22.12-gke.1200
 
 gcloud container clusters \
     create "${CLUSTER_NAME}" \
@@ -148,26 +148,26 @@ gcloud container node-pools \
     --region="${REGION}"
 ```
 
-We are also creating a **node pool for the Gitpod workspaces**.
+We are also creating a **node pool for the Gitpod regular workspaces**.
 
-|                   |                                                                                                                                                 |
-| ----------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
-| Image Type        | `UBUNTU_CONTAINERD`                                                                                                                             |
-| Machine Type      | `n2d-standard-8`                                                                                                                                |
-| Enable            | Autoscaling,<br/>Autorepair,<br/>IP Alias,<br/>Network Policy                                                                                   |
-| Disable           | Autoupgrade<br/>`metadata=disable-legacy-endpoints=true`                                                                                        |
-| Create Subnetwork | `gitpod-${CLUSTER_NAME}`                                                                                                                        |
-| Number of nodes   | 1                                                                                                                                               |
-| Min Nodes         | 1                                                                                                                                               |
-| Max Nodes         | 50                                                                                                                                              |
-| Max Pods per Node | 110                                                                                                                                             |
-| Scopes            | `gke-default`,<br/>`https://www.googleapis.com/auth/ndev.clouddns.readwrite`                                                                    |
-| Region            | Choose your [region and zones](https://cloud.google.com/compute/docs/regions-zones)                                                             |
-| Node Labels       | `gitpod.io/workload_workspace_services=true`,<br/>`gitpod.io/workload_workspace_regular=true`,<br/>`gitpod.io/workload_workspace_headless=true` |
+|                   |                                                                                     |
+| ----------------- | ----------------------------------------------------------------------------------- |
+| Image Type        | `UBUNTU_CONTAINERD`                                                                 |
+| Machine Type      | `n2d-standard-8`                                                                    |
+| Enable            | Autoscaling,<br/>Autorepair,<br/>IP Alias,<br/>Network Policy                       |
+| Disable           | Autoupgrade<br/>`metadata=disable-legacy-endpoints=true`                            |
+| Create Subnetwork | `gitpod-${CLUSTER_NAME}`                                                            |
+| Number of nodes   | 1                                                                                   |
+| Min Nodes         | 1                                                                                   |
+| Max Nodes         | 50                                                                                  |
+| Max Pods per Node | 110                                                                                 |
+| Scopes            | `gke-default`,<br/>`https://www.googleapis.com/auth/ndev.clouddns.readwrite`        |
+| Region            | Choose your [region and zones](https://cloud.google.com/compute/docs/regions-zones) |
+| Node Labels       | `gitpod.io/workload_workspace_regular=true`                                         |
 
 ```bash
 gcloud container node-pools \
-    create "workload-workspaces" \
+    create "workload-regular-workspaces" \
     --cluster="${CLUSTER_NAME}" \
     --disk-type="pd-ssd" \
     --disk-size="512GB" \
@@ -179,7 +179,45 @@ gcloud container node-pools \
     --enable-autoscaling \
     --metadata disable-legacy-endpoints=true \
     --scopes="gke-default,https://www.googleapis.com/auth/ndev.clouddns.readwrite" \
-    --node-labels="gitpod.io/workload_workspace_regular=true,gitpod.io/workload_workspace_headless=true" \
+    --node-labels="gitpod.io/workload_workspace_regular=true" \
+    --max-pods-per-node=110 \
+    --min-nodes=1 \
+    --max-nodes=50 \
+    --region="${REGION}"
+```
+
+We are also creating a **node pool for the Gitpod headless workspaces**.
+
+|                   |                                                                                     |
+| ----------------- | ----------------------------------------------------------------------------------- |
+| Image Type        | `UBUNTU_CONTAINERD`                                                                 |
+| Machine Type      | `n2d-standard-8`                                                                    |
+| Enable            | Autoscaling,<br/>Autorepair,<br/>IP Alias,<br/>Network Policy                       |
+| Disable           | Autoupgrade<br/>`metadata=disable-legacy-endpoints=true`                            |
+| Create Subnetwork | `gitpod-${CLUSTER_NAME}`                                                            |
+| Number of nodes   | 1                                                                                   |
+| Min Nodes         | 1                                                                                   |
+| Max Nodes         | 50                                                                                  |
+| Max Pods per Node | 110                                                                                 |
+| Scopes            | `gke-default`,<br/>`https://www.googleapis.com/auth/ndev.clouddns.readwrite`        |
+| Region            | Choose your [region and zones](https://cloud.google.com/compute/docs/regions-zones) |
+| Node Labels       | `gitpod.io/workload_workspace_headless=true`                                        |
+
+```bash
+gcloud container node-pools \
+    create "workload-headless-workspaces" \
+    --cluster="${CLUSTER_NAME}" \
+    --disk-type="pd-ssd" \
+    --disk-size="512GB" \
+    --image-type="UBUNTU_CONTAINERD" \
+    --machine-type="n2d-standard-8" \
+    --num-nodes=1 \
+    --no-enable-autoupgrade \
+    --enable-autorepair \
+    --enable-autoscaling \
+    --metadata disable-legacy-endpoints=true \
+    --scopes="gke-default,https://www.googleapis.com/auth/ndev.clouddns.readwrite" \
+    --node-labels="gitpod.io/workload_workspace_headless=true" \
     --max-pods-per-node=110 \
     --min-nodes=1 \
     --max-nodes=50 \
@@ -345,13 +383,14 @@ managedNodeGroups:
     labels:
       gitpod.io/workload_meta: "true"
       gitpod.io/workload_ide: "true"
+      gitpod.io/workload_workspace_services: "true"
 
     preBootstrapCommands:
       - echo "export USE_MAX_PODS=false" >> /etc/profile.d/bootstrap.sh
       - echo "export CONTAINER_RUNTIME=containerd" >> /etc/profile.d/bootstrap.sh
       - sed -i '/^set -o errexit/a\\nsource /etc/profile.d/bootstrap.sh' /etc/eks/bootstrap.sh
 
-  - name: workspaces
+  - name: regular-workspaces
     amiFamily: Ubuntu2004
     spot: false
     instanceTypes: ["m6i.2xlarge"]
@@ -387,7 +426,41 @@ managedNodeGroups:
 
     labels:
       gitpod.io/workload_workspace_regular: "true"
-      gitpod.io/workload_workspace_services: "true"
+
+    preBootstrapCommands:
+      - echo "export USE_MAX_PODS=false" >> /etc/profile.d/bootstrap.sh
+      - echo "export CONTAINER_RUNTIME=containerd" >> /etc/profile.d/bootstrap.sh
+      - sed -i '/^set -o errexit/a\\nsource /etc/profile.d/bootstrap.sh' /etc/eks/bootstrap.sh
+  - name: headless-workspaces
+    amiFamily: Ubuntu2004
+    spot: false
+    instanceTypes: ["m6i.2xlarge"]
+    desiredCapacity: 2
+    minSize: 1
+    maxSize: 50
+    maxPodsPerNode: 110
+    disableIMDSv1: false
+    volumeSize: 512
+    volumeType: gp3
+    volumeIOPS: 6000
+    volumeThroughput: 500
+    ebsOptimized: true
+    privateNetworking: true
+    propagateASGTags: true
+
+    iam:
+      attachPolicyARNs:
+        - arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly
+        - arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy
+        - arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy
+        - arn:aws:iam::aws:policy/ElasticLoadBalancingFullAccess
+        - arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+
+    tags:
+      k8s.io/cluster-autoscaler/enabled: "true"
+      k8s.io/cluster-autoscaler/gitpod: "owned"
+
+    labels:
       gitpod.io/workload_workspace_headless: "true"
 
     preBootstrapCommands:
