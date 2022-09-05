@@ -126,7 +126,7 @@ export const MENU: MenuEntry[] = [
     ]),
   ]),
   M("References", "references", [
-    M("Compatibility Matrix", "references/product-compatibility-matrix?user"),
+    M("Compatibility Matrix", "references/product-compatibility-matrix"),
     M(".gitpod.yml", "references/gitpod-yml"),
     M("Command Line Interface", "command-line-interface"),
     // M("Custom Docker image", "references/gitpod-dockerfile"),
