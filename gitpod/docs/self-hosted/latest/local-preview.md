@@ -24,7 +24,7 @@ This install method runs a [K3s](https://k3s.io/) cluster inside a Docker contai
 Run the following command to get the `local-preview` Docker container up and running:
 
 ```bash
-docker run -p 443:443 --privileged --name gitpod --rm -it  --mount type=volume,source=gitpod,destination=/var/gitpod eu.gcr.io/gitpod-core-dev/build/local-preview
+docker run -p 443:443 --privileged --name gitpod -it  --mount type=volume,source=gitpod,destination=/var/gitpod eu.gcr.io/gitpod-core-dev/build/local-preview
 ```
 
 Unpacking the above command:
