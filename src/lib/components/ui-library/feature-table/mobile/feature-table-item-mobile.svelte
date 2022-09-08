@@ -1,6 +1,7 @@
 <script lang="ts">
   import QaTooltip from "$lib/components/qa-tooltip.svelte";
-  import Cross from "$lib/components/svgs/cross.svelte";
+  import GreyDash from "$lib/components/svgs/grey-dash.svelte";
+  import GreenTick from "$lib/components/svgs/green-tick.svelte";
   export let definition: any;
 </script>
 
@@ -34,11 +35,10 @@
       {@html definition.text}
     {/if}
     {#if definition.availability}
-      <img alt="Yes" class="mx-auto" height="24" width="24" src="/tick.svg" />
+      <GreenTick />
     {/if}
-
     {#if definition.availability === false}
-      <Cross />
+      <GreyDash />
     {/if}
   </div>
 {/if}

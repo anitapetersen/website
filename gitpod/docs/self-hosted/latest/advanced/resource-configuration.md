@@ -8,7 +8,7 @@ title: Resource Configuration
   export const prerender = true;
 </script>
 
-# How To Configure Gitpod To Work With the Resources
+# How To Configure Gitpod To Work With Certain External Components
 
 Gitpod has three resource dependencies that are required to function correctly. For convenience, you can use the in-cluster dependencies, but you should use external resources for a high-performance application.
 

@@ -32,6 +32,7 @@ export const MENU: MenuEntry[] = [
     M("Dotfiles", "config-dotfiles", []),
     M("SSH", "configure/ssh"),
     M("Multi-Repo", "multi-repo-workspaces", [], "beta"),
+    M("Workspace Classes", "workspace-classes", [], "beta"),
   ]),
   M("Develop", "develop", [
     M("One workspace per task", "workspaces"),
@@ -92,14 +93,12 @@ export const MENU: MenuEntry[] = [
   M("Gitpod Self-Hosted", "self-hosted/latest", [
     M("Installation Guides", "self-hosted/latest/installation-guides", [
       M("Local Preview", "self-hosted/latest/local-preview", [], "beta"),
-      M("Getting Started", "self-hosted/latest/getting-started"),
       M(
         "Reference Architectures",
         "self-hosted/latest/reference-architecture",
-        [],
-        "alpha"
+        []
       ),
-      M("Cluster Set-Up", "self-hosted/latest/cluster-set-up"),
+      M("Installing Gitpod", "self-hosted/latest/installing-gitpod"),
       M("Advanced Installation", "self-hosted/latest/advanced"),
     ]),
     M("Operational Guides", "self-hosted/latest/operational-guides", [
@@ -116,12 +115,18 @@ export const MENU: MenuEntry[] = [
     ]),
     M("Reference", "self-hosted/latest/reference", [
       M("Required Components", "self-hosted/latest/required-components"),
+      M("Cluster Requirements", "self-hosted/latest/cluster-requirements"),
+      M(
+        "Compatibility Matrix",
+        "references/product-compatibility-matrix?admin"
+      ),
       M("Telemetry", "self-hosted/latest/telemetry"),
       M("Release Policies", "self-hosted/latest/releases"),
       M("Upgrade Guides", "self-hosted/latest/upgrade-guides"),
     ]),
   ]),
   M("References", "references", [
+    M("Compatibility Matrix", "references/product-compatibility-matrix?user"),
     M(".gitpod.yml", "references/gitpod-yml"),
     M("Command Line Interface", "command-line-interface"),
     // M("Custom Docker image", "references/gitpod-dockerfile"),

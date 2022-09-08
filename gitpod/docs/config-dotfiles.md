@@ -11,7 +11,7 @@ title: Dotfiles
 
 Dotfiles are a way to customize your developer environment according to your personal needs.
 
-To configure Gitpod to use your own dotfiles for all your workspaces, enter the URL of a public dotfiles repository in https://gitpod.io/preferences.
+To configure Gitpod to use your own dotfiles for all your workspaces, enter the URL of a dotfiles repository in [your user preferences](https://gitpod.io/preferences).
 
 Gitpod will recognize and run one of the following install scripts from your dotfiles repository.
 

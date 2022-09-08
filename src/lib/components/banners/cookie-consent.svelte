@@ -33,7 +33,7 @@
         <button
           on:click={() => {
             Cookies.set(cookies.ANALYTICAL, "false", { expires: 365 });
-            handleClose();
+            closeBanner();
           }}
           class="underline">Opt-out</button
         >

@@ -332,6 +332,11 @@ managedNodeGroups:
 
     tags:
       k8s.io/cluster-autoscaler/enabled: "true"
+      # Important - If you change the name of your EKS cluster from the
+      # default cluster name ("gitpod"), update this tag to match
+      # your cluster (`k8s.io/cluster-autoscaler/<cluster-name>: "owned"`)
+      #
+      # For example: `k8s.io/cluster-autoscaler/gitpod-corp: "owned"`
       k8s.io/cluster-autoscaler/gitpod: "owned"
 
     labels:
@@ -370,6 +375,11 @@ managedNodeGroups:
 
     tags:
       k8s.io/cluster-autoscaler/enabled: "true"
+      # Important - If you change the name of your EKS cluster from the
+      # default cluster name ("gitpod"), update the tag below to match
+      # your cluster (`k8s.io/cluster-autoscaler/<cluster-name>: "owned"`)
+      #
+      # For example: `k8s.io/cluster-autoscaler/gitpod-corp: "owned"`
       k8s.io/cluster-autoscaler/gitpod: "owned"
 
     labels:
@@ -549,7 +559,7 @@ eksctl create nodegroup --include=workspaces --config-file gitpod-cluster.yaml
 2022-06-24 13:59:13 [ℹ]  all nodegroups have up-to-date cloudformation templates
 ```
 
-You can verify that your installation was deployed properly with the custom `kubectl` command provided below which will let you review maxpods, kernel and containerd versions to ensure they are meeting [our minimum requirements](../../latest/cluster-set-up) as intended.
+You can verify that your installation was deployed properly with the custom `kubectl` command provided below which will let you review maxpods, kernel and containerd versions to ensure they are meeting [our minimum requirements](../../latest/cluster-requirements) as intended.
 
 ```bash
 kubectl get nodes -o=custom-columns="NAME:.metadata.name,\
@@ -565,6 +575,38 @@ Because of how EKS launches instances, coredns may end up running on a single no
 
 ```bash
 kubectl rollout restart deployment.apps/coredns -n kube-system
+```
+
+### Enable cluster autoscaling
+
+Gitpod's resource usage will vary depending on the number of active workspaces and image prebuilds during the day. The use of a cluster autoscaler is recommended to scale EKS nodes on demand and thus minimize the cost you pay.
+
+```bash
+CLUSTER_NAME="gitpod"
+AWS_REGION="eu-west-1"
+
+helm repo add autoscaler https://kubernetes.github.io/autoscaler
+helm repo update
+helm upgrade \
+    --atomic \
+    --cleanup-on-fail \
+    --install \
+    --namespace kube-system \
+    --reset-values \
+    --wait \
+    --set cloudProvider=aws \
+    --set awsRegion=$AWS_REGION \
+    --set autoDiscovery.clusterName=$CLUSTER_NAME \
+    --set serviceAccount.create=false \
+    --set serviceAccount.name=cluster-autoscaler \
+    --set securityContext.fsGroup=65534 \
+    --set extraArgs.skip-nodes-with-local-storage=false \
+    --set extraArgs.skip-nodes-with-system-pods=false \
+    --set extraArgs.expander=least-waste \
+    --set extraArgs.balance-similar-node-groups=true \
+    --set extraArgs.scale-down-utilization-threshold=0.2 \
+    --set extraArgs.v=2 \
+    autoscaler autoscaler/cluster-autoscaler
 ```
 
 ### Deleting the cluster

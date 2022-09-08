@@ -8,7 +8,7 @@ title: Install Gitpod Self-Hosted on Google Kubernetes Engine (GKE)
   export const load = () => {
     return {
       status: 301,
-      redirect: "/docs/self-hosted/latest/cluster-set-up/on-gke"
+      redirect: "/docs/self-hosted/latest/reference-architecture"
     }
   };
 </script>

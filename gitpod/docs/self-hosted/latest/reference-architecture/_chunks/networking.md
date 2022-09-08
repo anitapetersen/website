@@ -161,7 +161,7 @@ HOSTED_ZONE_ID="$(aws route53 list-hosted-zones-by-name \
     --out text)"
 ```
 
-Then install external-dns so that DNS records will be automatically created for Gitpod services. This can be ignored if you are managing DNS records yourself. 
+Then install external-dns so that DNS records will be automatically created for Gitpod services. This can be ignored if you are managing DNS records yourself.
 
 <!--
 external-dns helm chart notes:

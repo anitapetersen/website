@@ -26,4 +26,4 @@ New versions are first rolled out to all users that are on the `community` licen
 
 <!-- ToDo: link to reference architecture once this is shipped -->
 
-For each release, we validate that core Gitpod workflows function as expected via a series of automated and manual tests. These tests are performed on different Gitpod installations running on our reference architectures outlined in our [guides](../latest/cluster-set-up). This should help ensure that Gitpod works for you, assuming your architecture is close to the reference architecture.
+For each release, we validate that core Gitpod workflows function as expected via a series of automated and manual tests. These tests are performed on different Gitpod installations running on our [reference architectures](../latest/reference-architecture). This should help ensure that Gitpod works for you, assuming your architecture is close to the reference architecture.
