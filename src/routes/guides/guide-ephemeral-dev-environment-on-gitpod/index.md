@@ -198,7 +198,7 @@ Inside your workspace, Open the terminal & run the following steps:
 - [Docs: Config Dotfiles](https://www.gitpod.io/docs/config-dotfiles)
 - [GitHub Repository: Bring your own Dotfiles to Gitpod | dotfiles on Gitpod](https://github.com/gitpod-io/demo-dotfiles-with-gitpod)
 - [GitHub Repository: AWS Single Sign-On (SSO) and Amazon Elastic Container Registry (ECR) with Gitpod](https://github.com/gitpod-io/demo-aws-with-gitpod)
-- [Blog: Gitpodifying — The Ultimate Guide](https://www.gitpod.io/blog/gitpodify)
+- [Guide: Gitpodifying — The Ultimate Guide](https://www.gitpod.io/guides/gitpodify)
 - [Blog: Personalize your Gitpod Workspace Environments](https://www.gitpod.io/blog/personalize-your-gitpod-workspace-environment)
 
 ---

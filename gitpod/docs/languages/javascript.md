@@ -85,5 +85,5 @@ This section was moved into [Svelte guide](/docs/languages/svelte).
 
 - [Sustainable Node.js development with only a browser](/blog/node-js-development).
 - [Developing a Nuxt.js app entirely in your browser](/blog/developing-nuxtjs-in-browser)
-- [Gitpodifying — The Ultimate Guide](/blog/gitpodify)
+- [Gitpodifying — The Ultimate Guide](/guides/gitpodify)
 - [Debugging Node.js applications in Theia](/blog/node-js-gitpod)

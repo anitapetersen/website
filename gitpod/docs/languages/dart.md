@@ -43,6 +43,6 @@ It adds [IntelliSense](https://code.visualstudio.com/docs/editor/intellisense) s
 
 ## Try it
 
-Here is a hello world example of a [Gitpodified](/blog/gitpodify) project running in the browser, try it!
+Here is a hello world example of a [Gitpodified](/guides/gitpodify) project running in the browser, try it!
 
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/gitpod-io/Gitpod-Dart)

@@ -13,7 +13,7 @@ Gitpod comes with great support for Python built-in. Still, depending on your pr
 
 ## Python Project Examples
 
-Before we get started, here are some examples of already-[gitpodified](/blog/gitpodify) repositories!
+Before we get started, here are some examples of already-[gitpodified](/guides/gitpodify) repositories!
 
 <div class="overflow-x-auto">
 

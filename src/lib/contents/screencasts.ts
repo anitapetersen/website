@@ -169,7 +169,7 @@ export const screencasts: Screencast[] = [
     youtubeId: "8oXSzN_W8Ls",
     relatedDocs: [
       {
-        path: "/blog/gitpodify#installing-databases",
+        path: "/guides/gitpodify#installing-databases",
         title: "Installing databases",
       },
     ],
