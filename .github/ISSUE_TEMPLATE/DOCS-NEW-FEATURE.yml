@@ -6,7 +6,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        Thank you for helping us write documentation for your new feature 🙏.
+        Thank you for helping us to write the documentation for your new feature 🙏.
   - type: textarea
     id: description
     attributes:
